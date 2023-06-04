@@ -1,4 +1,4 @@
-name: Sigrid pull request feedback
+name: sigrid-pullrequest
 on: [pull_request]
 
 jobs:
@@ -7,10 +7,9 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v3
-      - name: Sigrid CI
-        uses: Software-Improvement-Group/sigridci@main
-        with:
-          customer: examplecustomername
-          system: examplesystemname
+      - name: Download Sigrid CI
+        run: "git clone https://github.com/Software-Improvement-Group/sigridci.git sigridci"
+      - name: "Run Sigrid CI" 
         env:
           SIGRID_CI_TOKEN: "${{ secrets.SIGRID_CI_TOKEN }}"
+        run: "./sigridci/sigridci/sigridci.py --customer examplecustomername --system examplesystemname --source ."
